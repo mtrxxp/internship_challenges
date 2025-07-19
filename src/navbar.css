@@ -1,0 +1,37 @@
+body{
+    margin: 0;
+}
+nav{
+    background-color: #393E46;
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border-bottom: 2px solid #433D8B;
+    padding: 5px;
+}
+p{
+    font-weight: bold;
+    font-size: 25px;
+}
+ul{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+}
+a{
+    padding: 7px;
+    border: 2px solid #433D8B;
+    background: yellow;
+    border-radius: 10px;
+    margin-right: 20px;
+    font-weight: bold;
+}
+a:hover{
+    background: darkorange;
+    transition: 1s;
+}
