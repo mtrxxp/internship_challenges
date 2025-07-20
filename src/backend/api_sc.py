@@ -3,13 +3,13 @@ from flask_cors import CORS
 import sqlite3
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
 DATABASE = "./youtube_scrapper_for_internship-main/channels.db"
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row  # So we get dict-like rows
+    conn.row_factory = sqlite3.Row
     return conn
 
 @app.route("/channels", methods=["GET"])
