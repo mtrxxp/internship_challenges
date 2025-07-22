@@ -1,0 +1,10 @@
+# Flask backend
+flask
+flask-cors
+flask-sqlalchemy
+qrcode
+pillow
+
+# YouTube scraper
+google-api-python-client==2.121.0
+python-dotenv

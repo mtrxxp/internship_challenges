@@ -1,0 +1,57 @@
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - youtube_api
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    command: python app.py #API 5000 main back
+    volumes:
+      - ./src/backend:/app
+    ports:
+      - "5000:5000"
+    container_name: backend
+    networks:
+      - app-network
+
+  youtube_api:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    command: python api_sc.py #API 5001
+    volumes:
+      - ./src/backend:/app
+    ports:
+      - "5001:5001"
+    container_name: youtube_api
+    networks:
+      - app-network
+
+  coder:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    command: python coder.py #API 5002
+    volumes: 
+      - ./src/backend:/app
+    ports:
+      - "5002:5002"
+    container_name: coder
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
