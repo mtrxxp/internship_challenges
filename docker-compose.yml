@@ -1,10 +1,8 @@
-
 services:
   frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-
     ports:
       - "80:80"
     depends_on:
@@ -17,7 +15,7 @@ services:
     build:
       context: ./src/backend
       dockerfile: Dockerfile
-    command: python app.py #API 5000 main back
+    command: python app.py # API 5000 main back
     volumes:
       - ./src/backend:/app
     ports:
@@ -30,7 +28,7 @@ services:
     build:
       context: ./src/backend
       dockerfile: Dockerfile
-    command: python api_sc.py #API 5001
+    command: python api_sc.py # API 5001
     volumes:
       - ./src/backend:/app
     ports:
@@ -43,12 +41,31 @@ services:
     build:
       context: ./src/backend
       dockerfile: Dockerfile
-    command: python coder.py #API 5002
+    command: python coder.py # API 5002
     volumes: 
       - ./src/backend:/app
     ports:
       - "5002:5002"
     container_name: coder
+    networks:
+      - app-network
+
+  redis:
+    image: redis:alpine
+    networks:
+      - app-network
+
+  celery_worker:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    command: celery -A api_sc.celery worker --loglevel=info  # ⬅ вот эта строка!
+    volumes:
+      - ./src/backend:/app
+      - ./src/backend/youtube_scrapper_for_internship-main:/app/youtube_scrapper_for_internship-main
+    depends_on:
+      - redis
+      - youtube_api
     networks:
       - app-network
 

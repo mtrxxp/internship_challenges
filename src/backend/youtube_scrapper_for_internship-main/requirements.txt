@@ -8,3 +8,8 @@ pillow
 # YouTube scraper
 google-api-python-client==2.121.0
 python-dotenv
+
+flask
+flask-cors
+celery[redis]
+

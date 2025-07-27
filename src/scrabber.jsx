@@ -1,61 +1,87 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import Navbar from './navbar.jsx'
-import './navbar.css'
-import React, { useEffect, useState } from "react";
-import './adminpage.css'
+import React, { useState, useEffect } from "react";
+import "./adminpage.css";
 
-function ChannelTable() {
-  const [channels, setChannels] = useState([]);
+function Scrabber() {
+  const [taskId, setTaskId] = useState(null);
+  const [status, setStatus] = useState("idle");
+  const [message, setMessage] = useState("");
+
+  const startScrape = async () => {
+    setStatus("pending");
+    setMessage("🔄 Scraping started...");
+
+    try {
+      const response = await fetch("/start_scrape", {
+        method: "POST",
+      });
+
+      if (!response.ok) throw new Error("Failed to start scraping");
+
+      const data = await response.json();
+      setTaskId(data.task_id);
+    } catch (error) {
+      setStatus("error");
+      setMessage("❌ Failed to start scraping.");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    fetch("http://youtube_api:5001/channels")
-      .then((res) => res.json())
-      .then((data) => setChannels(data))
-      .catch((err) => console.error(err));
-  }, []);
+    if (!taskId || status !== "pending") return;
 
-  
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`/scrape_status/${taskId}`);
+        if (!res.ok) throw new Error("Failed to fetch status");
+
+        const data = await res.json();
+        const scrapeStatus = data.status;
+
+        if (scrapeStatus === "SUCCESS") {
+          setStatus("success");
+          setMessage("✅ Scraping completed!");
+          clearInterval(interval);
+        } else if (scrapeStatus === "FAILURE") {
+          setStatus("error");
+          setMessage("❌ Scraping failed.");
+          clearInterval(interval);
+        }
+      } catch (error) {
+        setStatus("error");
+        setMessage("❌ Error fetching status.");
+        clearInterval(interval);
+      }
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [taskId, status]);
+
   return (
-    <div>
-      <h1>YouTube Channels</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Country</th>
-            <th>Views</th>
-            <th>Video count</th>
-            <th>Subscribers</th>
-            <th>Link</th>
-          </tr>
-        </thead>
-        <tbody>
-          {channels.map((channel) => (
-            <tr key={channel.id}>
-              <td>{channel.title}</td>
-              <td>{channel.country}</td>
-              <td>{channel.views}</td>
-              <td>{channel.video_count}</td>
-              <td>{channel.subscribers.toLocaleString()}</td>
-              <td>
-                <a
-                  href={channel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Visit
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="scrabber-container">
+      <h2>YouTube Channel Scraper</h2>
+
+      <button
+        onClick={startScrape}
+        className="btn"
+        disabled={status === "pending"}
+      >
+        {status === "pending" ? "Scraping..." : "Start Scraping"}
+      </button>
+
+      <p className="scrape-status">
+        {message}
+        {status === "pending" && (
+          <span className="loader" style={{ marginLeft: "10px" }}></span>
+        )}
+      </p>
+
+      {status === "success" && (
+        <a href="/download_csv" className="btn download-btn" download>
+          📥 Download CSV
+        </a>
+      )}
     </div>
   );
 }
 
-export default ChannelTable;
-
-
+export default Scrabber;

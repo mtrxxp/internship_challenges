@@ -9,8 +9,11 @@ export default defineConfig({
       '/shortener': 'http://localhost:5000',
       '/analytics': 'http://localhost:5000',
       '/all_urls': 'http://localhost:5000',
+      '/start_scrape': 'http://localhost:5000',
+      '/scrape_status': 'http://localhost:5000',
       '/channels': 'http://localhost:5001',
-      '/generate_qr': 'http://localhost:5002'  // <-- добавили!
+      '/generate_qr': 'http://localhost:5002'
     }
+
   }
 });
