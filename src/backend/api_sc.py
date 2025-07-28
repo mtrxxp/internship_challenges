@@ -4,12 +4,10 @@ from celery import Celery
 import subprocess
 import sqlite3
 from flask import send_file
-
+from youtube_scrapper_for_internship_main.database import DATABASE, init_db, save_channel, export_to_csv, close_db
 app = Flask(__name__)
 CORS(app)
 
-# === DATABASE ===
-DATABASE = "./youtube_scrapper_for_internship-main/channels.db"
 
 def get_db_connection():
     conn = sqlite3.connect(DATABASE)
@@ -86,9 +84,10 @@ def run_scraper():
             check=True,
             capture_output=True,
             text=True,
-            cwd="youtube_scrapper_for_internship-main"  # 👈 Укажи рабочую директорию!
+            cwd="youtube_scrapper_for_internship_main" 
         )
         print("✅ Scraping completed:", result.stdout)
+        
         return {"status": "completed", "output": result.stdout}
     except subprocess.CalledProcessError as e:
         print("❌ Scraping failed:", e.stderr)
@@ -96,7 +95,7 @@ def run_scraper():
 
 @app.route("/download_csv", methods=["GET"])
 def download_csv():
-    csv_path = "./youtube_scrapper_for_internship-main/influencers.csv"
+    csv_path = './youtube_scrapper_for_internship_main/'
     if not os.path.exists(csv_path):
         return jsonify({"error": "CSV file not found"}), 404
 

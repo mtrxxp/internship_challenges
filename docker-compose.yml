@@ -62,7 +62,7 @@ services:
     command: celery -A api_sc.celery worker --loglevel=info  # ⬅ вот эта строка!
     volumes:
       - ./src/backend:/app
-      - ./src/backend/youtube_scrapper_for_internship-main:/app/youtube_scrapper_for_internship-main
+      - ./src/backend/youtube_scrapper_for_internship_main:/app/databases
     depends_on:
       - redis
       - youtube_api

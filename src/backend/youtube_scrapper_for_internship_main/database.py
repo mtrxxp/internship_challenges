@@ -3,7 +3,7 @@ import os
 import csv
 
 # Гарантируем, что папка существует
-DB_DIR = "./youtube_scrapper_for_internship-main"
+DB_DIR = os.path.join(os.path.dirname(__file__), "databases")
 os.makedirs(DB_DIR, exist_ok=True)
 
 # Путь к базе (виден и в git-проекте, и в контейнере)
