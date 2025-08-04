@@ -12,7 +12,10 @@ export default defineConfig({
       '/start_scrape': 'http://localhost:5000',
       '/scrape_status': 'http://localhost:5000',
       '/channels': 'http://localhost:5001',
-      '/generate_qr': 'http://localhost:5002'
+      '/generate_qr': 'http://localhost:5002',
+      '/stop_scrape': 'http://localhost:5001',
+      '/csv_files': 'http://localhost:5001',
+      '/download_csv': 'http://localhost:5001'
     }
 
   }

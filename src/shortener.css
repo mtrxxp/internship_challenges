@@ -1,19 +1,58 @@
-.shortener{
-    text-align: center;
+.shortener-container {
+  padding: 30px;
+  text-align: center;
+  background-color: white;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
-input{
-    border: 1px solid blue;
-    padding: 10px;
-    border-radius: 10px;
-    width: 15%;
+
+.shortener-container h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 20px;
 }
-button{
-    padding: 10px;
-    margin-top: 15px;
+
+input[type='url'] {
+  border: 1px solid #4a90e2;
+  padding: 12px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 400px;
+  font-size: 16px;
 }
-form{
-    text-align: center;
+
+button.btn {
+  background-color: #4a90e2;
+  color: white;
+  padding: 12px 18px;
+  font-size: 16px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
-.URLShort{
-    width: 15%;
+
+button.btn:hover {
+  background-color: #357ABD;
+}
+
+.result {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  color: #2c3e50;
+}
+
+.icon-big {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  vertical-align: middle;
 }

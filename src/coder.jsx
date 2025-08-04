@@ -1,10 +1,10 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import Navbar from './navbar.jsx'
-import './navbar.css'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
+import Navbar from './navbar.jsx';
+import './navbar.css';
 import React, { useState } from 'react';
-import './coder.css'
+import './coder.css';
 
 export default function QRCodeGenerator() {
   const [text, setText] = useState('');
@@ -27,12 +27,13 @@ export default function QRCodeGenerator() {
       const imgUrl = URL.createObjectURL(blob);
       setQrCode(imgUrl);
     } else {
-      alert('Error generating QR Code');
+      const err = await response.text();
+      alert(`Error generating QR Code: ${err}`);
     }
   };
 
   return (
-    <div className='coder'>
+    <div className="coder">
       <h1>QR Code Generator</h1>
       <input
         type="text"
@@ -40,15 +41,13 @@ export default function QRCodeGenerator() {
         onChange={(e) => setText(e.target.value)}
         placeholder="Enter URL"
       />
-      <br></br>
-      <button
-        onClick={generateQRCode}
-      >
+      <br />
+      <button onClick={generateQRCode}>
         Generate QR Code
       </button>
-      <br></br>
+      <br />
       {qrCode && (
-        <img src={qrCode} alt="QR Code" className='qr'/>
+        <img src={qrCode} alt="QR Code" className="qr" />
       )}
     </div>
   );

@@ -13,3 +13,5 @@ flask
 flask-cors
 celery[redis]
 
+psycopg2-binary
+sqlalchemy

@@ -45,7 +45,7 @@ export default function AdminPage() {
           {urls.map((url) => (
             <tr key={url.id}>
               <td>{url.id}</td>
-              <td>{url.original_url}</td>
+              <td title={url.original_url}>{url.original_url}</td>
               <td>{url.short_id}</td>
               <td>
                 <button

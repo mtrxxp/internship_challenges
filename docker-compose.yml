@@ -62,12 +62,31 @@ services:
     command: celery -A api_sc.celery worker --loglevel=info  # ⬅ вот эта строка!
     volumes:
       - ./src/backend:/app
-      - ./src/backend/youtube_scrapper_for_internship_main:/app/databases
+      - ./src/backend/youtube_scrapper_for_internship_main/databases:/app/youtube_scrapper_for_internship_main/databases
     depends_on:
       - redis
       - youtube_api
     networks:
       - app-network
+  
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ArturKarwatka
+      POSTGRES_PASSWORD: kovex
+      POSTGRES_DB: youtube_db
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
 
 networks:
   app-network:
