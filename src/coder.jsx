@@ -16,7 +16,7 @@ export default function QRCodeGenerator() {
       return;
     }
 
-    const response = await fetch('/generate_qr', {
+    const response = await fetch('http://localhost:5002/generate_qr', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text }),
