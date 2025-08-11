@@ -1,9 +1,15 @@
+import random
 from googleapiclient.discovery import build
-from youtube_scrapper_for_internship_main.config import API_KEY
+from youtube_scrapper_for_internship_main.config import API_KEY 
 
-youtube = build("youtube", "v3", developerKey=API_KEY)
+def get_youtube_client():
+    if not API_KEY:
+        raise ValueError("Нет доступных API ключей")
+    api_key = random.choice(API_KEY)
+    return build("youtube", "v3", developerKey=api_key)
 
 def search_channels(query, max_results=10):
+    youtube = get_youtube_client()
     request = youtube.search().list(
         q=query,
         type="channel",
@@ -14,6 +20,7 @@ def search_channels(query, max_results=10):
     return [item["snippet"]["channelId"] for item in response["items"]]
 
 def get_channel_info(channel_id):
+    youtube = get_youtube_client()
     request = youtube.channels().list(
         part="snippet,statistics,topicDetails",
         id=channel_id
@@ -25,11 +32,10 @@ def get_channel_info(channel_id):
     data = response["items"][0]
     title = data["snippet"]["title"]
 
-   #by name
     if title.lower().endswith(" - topic"):
-            ch_type = "t"
+        ch_type = "t"
     else:
-            ch_type = "c"
+        ch_type = "c"
 
     return {
         "channel_id": channel_id,

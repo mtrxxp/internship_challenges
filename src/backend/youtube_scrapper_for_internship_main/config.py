@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = os.getenv("API_KEY")
+API_KEY = [key.strip() for key in os.getenv("API_KEY", "").split(",") if key.strip()]
 
 LANGUAGE_REGIONS = {
     "en": ["US", "GB", "CA", "AU"],

@@ -1,5 +1,23 @@
+.scrabber-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;       
+  justify-content: center;  
+  min-height: 100vh;        
+  box-sizing: border-box;
+  text-align: center;        
+  max-width: 900px;
+  background-color: white;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+
 table {
-  max-width: 800px; /* ограничиваем ширину таблицы */
+  max-width: 800px; 
   width: 90%;
   margin: 20px auto;
   border-collapse: collapse;
@@ -7,7 +25,7 @@ table {
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  table-layout: fixed; /* равномерно распределяем колонки */
+  table-layout: fixed; 
 }
 
 th, td {
@@ -21,7 +39,7 @@ th, td {
 
 th:nth-child(2),
 td:nth-child(2) {
-  max-width: 300px; /* ограничиваем ширину Original URL */
+  max-width: 300px; 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

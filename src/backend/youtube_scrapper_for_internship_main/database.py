@@ -7,11 +7,11 @@ load_dotenv()
 
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
 
-# Папка для CSV
+
 DB_DIR = os.path.join(os.path.dirname(__file__), "databases")
 os.makedirs(DB_DIR, exist_ok=True)
 
-# Только для SQLite
+
 DATABASE = os.path.join(DB_DIR, "channels.db")
 
 def get_connection():

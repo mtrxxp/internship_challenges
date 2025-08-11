@@ -26,10 +26,13 @@ function Scrabber() {
   const stopScrape = async () => {
     try {
       const res = await fetch("/stop_scrape", { method: "POST" });
+      if (!res.ok) throw new Error("Failed to stop scraping");
       await res.json();
-      setStatus("stopping");
-      setMessage("🛑 Scraper is stopped");
-    } catch (error) {
+
+      setStatus("stopped");
+      setMessage("🛑 Scraper stopped. CSV files are ready for download.");
+      fetchCsvFiles();
+    } catch {
       setMessage("❌ Failed to stop scraping.");
     }
   };
@@ -79,12 +82,19 @@ function Scrabber() {
   return (
     <div className="scrabber-container">
       <h2>
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none" viewBox="0 0 24 24"
-             strokeWidth="1.5" stroke="currentColor"
-             className="icon-big">
-          <path strokeLinecap="round" strokeLinejoin="round"
-                d="M3 5h18M9 3v2m6-2v2m-9 6h12M9 9v6m6-6v6m-9 6h12" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="icon-big"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3 5h18M9 3v2m6-2v2m-9 6h12M9 9v6m6-6v6m-9 6h12"
+          />
         </svg>
         YouTube Channel Scraper
       </h2>
@@ -112,13 +122,17 @@ function Scrabber() {
         {status === "pending" && <span className="loader"></span>}
       </p>
 
-      {status === "success" && csvFiles.length > 0 && (
+      {(status === "success" || status === "stopped") && csvFiles.length > 0 && (
         <div className="csv-list">
           <h4>📁 Available CSV Files</h4>
           <ul>
             {csvFiles.map((filename, idx) => (
               <li key={idx}>
-                <a href={`/download_csv/${filename}`} download className="btn small-btn">
+                <a
+                  href={`/download_csv/${filename}`}
+                  className="btn small-btn"
+                  download
+                >
                   ⬇ {filename}
                 </a>
               </li>
