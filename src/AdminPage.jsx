@@ -30,8 +30,8 @@ export default function AdminPage() {
 
   return (
     <div>
-      <h1>Admin Dashboard</h1>
-      <h2>All Shortened Links</h2>
+      <h1 style={{color: 'white', textAlign: 'center'}}>Admin Dashboard</h1>
+      <h2 style={{color: 'white', textAlign: 'center'}}>All Shortened Links</h2>
       <table>
         <thead>
           <tr>
