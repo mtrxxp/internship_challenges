@@ -82,20 +82,6 @@ function Scrabber() {
   return (
     <div className="scrabber-container">
       <h2>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="icon-big"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 5h18M9 3v2m6-2v2m-9 6h12M9 9v6m6-6v6m-9 6h12"
-          />
-        </svg>
         YouTube Channel Scraper
       </h2>
 

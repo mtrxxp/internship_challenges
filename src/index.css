@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee&family=Mozilla+Headline:wght@200..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
-  background-color: #ffffff;
+  font-style: normal;
+  font-size: 25px;
+  background: url("./public/18880244_v904-nunny-004-g.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #333;
 
   font-synthesis: none;
@@ -12,7 +17,7 @@
 
 body {
   margin: 0;
-  background-color: #ffffff;
+  font-size: 25px;
 }
 
 a {
