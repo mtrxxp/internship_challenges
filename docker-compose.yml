@@ -73,6 +73,10 @@ services:
     image: postgres:16
     container_name: postgres
     restart: unless-stopped
+    environment:
+      POSTGRES_USER: ArturKarwatka
+      POSTGRES_PASSWORD: kovex
+      POSTGRES_DB: youtube_db
     ports:
       - "5432:5432"
     networks:
