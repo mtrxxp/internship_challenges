@@ -26,7 +26,7 @@ def main():
                     print(f"🔎 Найдено {len(channel_ids)} каналов")
                     for cid in channel_ids:
                         time.sleep(REQUEST_DELAY)
-                        info = get_channel_info(cid)
+                        info = get_channel_info(cid, found_keywords=query)
                         print(f"📦 Info: {info}")
 
                         if info and info["subscribers"] >= MIN_SUBSCRIBERS:
