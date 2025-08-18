@@ -3,21 +3,20 @@ import csv
 import sqlite3
 from datetime import datetime
 from dotenv import load_dotenv
-from zoneinfo import ZoneInfo  # встроенный модуль (Python 3.9+)
+from zoneinfo import ZoneInfo  
 
 load_dotenv()
 
-# Тип БД: postgres или sqlite
+
 DB_TYPE = os.getenv("DB_TYPE", "sqlite").lower()
 
-# Директория и файл БД для SQLite
+
 DB_DIR = os.path.join(os.path.dirname(__file__), "databases")
 os.makedirs(DB_DIR, exist_ok=True)
 DATABASE = os.path.join(DB_DIR, "channels.db")
 
 
 def get_connection():
-    """Возвращает соединение с БД (Postgres или SQLite)."""
     if DB_TYPE == "postgres":
         import psycopg2
         return psycopg2.connect(
@@ -32,7 +31,6 @@ def get_connection():
 
 
 def init_db():
-    """Создаёт таблицу influencers если её нет."""
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('''
@@ -54,16 +52,10 @@ def init_db():
 
 
 def save_channel(info: dict):
-    """Сохраняет или обновляет информацию о канале."""
-
     conn = get_connection()
     cursor = conn.cursor()
-
-    # время в часовом поясе Варшавы
     scraped_at = datetime.now(ZoneInfo("Europe/Warsaw")).strftime("%Y-%m-%d %H:%M:%S")
-
-    # гарантируем строку для keywords
-    keywords = info.get("keywords")
+    keywords = info.get("found_keywords")
     if isinstance(keywords, list):
         found_keywords = ",".join(keywords)
     elif isinstance(keywords, str):
@@ -120,11 +112,15 @@ def save_channel(info: dict):
 
 
 def export_to_csv(filename="influencers.csv"):
-    """Экспортирует данные из БД в CSV."""
     full_path = os.path.join(DB_DIR, filename)
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM influencers")
+
+    
+    cursor.execute("""
+        SELECT scraped_at, found_keywords, channel_id, title, country, subscribers, views, video_count, url, type
+        FROM influencers
+    """)
     rows = cursor.fetchall()
     conn.close()
 
@@ -148,11 +144,11 @@ def export_to_csv(filename="influencers.csv"):
 
 
 def close_db():
-    """На будущее (если нужен пул соединений)."""
+
     pass
 
 
-# Если запускать напрямую: создаём БД
+
 if __name__ == "__main__":
     init_db()
     print("✅ Database initialized")

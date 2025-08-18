@@ -19,7 +19,7 @@ def search_channels(query, max_results=10):
     response = request.execute()
     return [item["snippet"]["channelId"] for item in response["items"]]
 
-def get_channel_info(channel_id):
+def get_channel_info(channel_id, found_keywords=None):
     youtube = get_youtube_client()
     request = youtube.channels().list(
         part="snippet,statistics,topicDetails",
@@ -45,5 +45,6 @@ def get_channel_info(channel_id):
         "views": int(data["statistics"]["viewCount"]),
         "video_count": int(data["statistics"]["videoCount"]),
         "url": f"https://www.youtube.com/channel/{channel_id}",
-        "type": ch_type
+        "type": ch_type,
+        "found_keywords": [found_keywords] if found_keywords else []
     }
